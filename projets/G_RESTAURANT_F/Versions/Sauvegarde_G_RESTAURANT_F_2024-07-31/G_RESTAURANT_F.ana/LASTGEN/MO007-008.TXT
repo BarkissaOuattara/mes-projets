@@ -1,0 +1,2 @@
+//MO007-008.TXT ANA00007 TO ANA00008
+Commande_produit	IDCommande_IDProduit	RUB-		la rubrique IDCommande_IDProduit est supprimée

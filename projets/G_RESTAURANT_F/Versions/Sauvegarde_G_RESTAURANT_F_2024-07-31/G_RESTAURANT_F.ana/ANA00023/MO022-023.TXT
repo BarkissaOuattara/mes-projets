@@ -1,0 +1,5 @@
+//MO022-023.TXT ANA00022 TO ANA00023
+Commande		TAR	96	nouvelle taille enregistrement : 96
+Commande	Total	RUB+		Total est une nouvelle rubrique
+produit		TAR	250	nouvelle taille enregistrement : 250
+produit	QuantiteStocke	RUB+		QuantiteStocke est une nouvelle rubrique

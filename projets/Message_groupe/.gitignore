@@ -1,0 +1,19 @@
+# SafeRelay workspace
+
+# Spring Boot / Maven
+employee-safety-backend/target/
+employee-safety-backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Local extension/generated files
+.github/java-upgrade/
+
+# Secrets
+*.env
+*service-account*.json
+google-services.json
+GoogleService-Info.plist

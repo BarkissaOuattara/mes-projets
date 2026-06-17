@@ -1,0 +1,182 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ragged2e}
+
+\begin{document}
+\justifying
+
+\section*{Préparation aux Modèles Dynamiques en Écologie et Épidémiologie}
+
+\subsection*{Introduction}
+
+La modélisation mathématique des dynamiques de populations est essentielle pour comprendre les interactions biologiques (compétition, prédation, coopération, etc.) et épidémiologiques. Ces modèles sont basés sur des équations différentielles, dont l'analyse permet de prédire l'évolution des espèces ou des maladies.
+
+Le but de ce document est de proposer :
+\begin{itemize}
+  \item Une liste de \textbf{questions classiques posées en devoirs ou examens} pour chaque type de modèle.
+  \item Des \textbf{méthodes de réponse standardisées}.
+  \item Des \textbf{exercices corrigés} pour t'entraîner efficacement.
+\end{itemize}
+
+\section*{Questions Possibles et Méthodes de Réponse}
+
+\begin{itemize}
+  \item \textbf{Q : Quels sont les équilibres du système ?}
+  \begin{itemize}
+    \item \textit{Méthode} : Résoudre $x'=0$ et $y'=0$ (et $S'=0$ etc. selon le modèle) simultanément.
+  \end{itemize}
+  \item \textbf{Q : Ces équilibres sont-ils stables ?}
+  \begin{itemize}
+    \item \textit{Méthode} : Calculer la matrice jacobienne au point d'équilibre, étudier les valeurs propres.
+  \end{itemize}
+  \item \textbf{Q : Interprétation biologique des équilibres ?}
+  \begin{itemize}
+    \item \textit{Méthode} : Chaque équilibre représente une configuration possible : extinction, coexistence, dominance.
+  \end{itemize}
+  \item \textbf{Q : Quelle est la nature de l’interaction ?}
+  \begin{itemize}
+    \item \textit{Méthode} : Regarder le signe du terme en $xy$ dans chaque équation.
+  \end{itemize}
+  \item \textbf{Q : Quel est l’effet d’un paramètre (\(\alpha, \beta, r\), etc.) ?}
+  \begin{itemize}
+    \item \textit{Méthode} : Interpréter biologiquement. Par exemple, augmenter $\beta$ augmente la prédation.
+  \end{itemize}
+\end{itemize}
+
+\section*{1. Modèle Proie-Prédateur (Lotka-Volterra)}
+
+\begin{itemize}
+  \item \textbf{Équations typiques} :
+  \[
+  \begin{cases}
+  x' = \alpha x - \beta xy \\
+  y' = \delta xy - \gamma y
+  \end{cases}
+  \]
+  \item \textbf{Signification des paramètres} :
+  \begin{itemize}
+    \item $x$ : population de proies,
+    \item $y$ : population de prédateurs,
+    \item $\alpha$ : taux de croissance naturelle des proies,
+    \item $\beta$ : taux de prédation,
+    \item $\delta$ : efficacité de conversion des proies en prédateurs,
+    \item $\gamma$ : mortalité naturelle des prédateurs.
+  \end{itemize}
+  \item \textbf{Questions classiques} :
+  \begin{itemize}
+    \item Quels sont les points d’équilibre ? $(0,0)$ et $\left(\frac{\gamma}{\delta}, \frac{\alpha}{\beta}\right)$
+    \item La dynamique est-elle cyclique ? Oui (oscillations périodiques).
+    \item Que se passe-t-il si $\beta$ augmente ? La prédation est plus forte $\Rightarrow$ les proies diminuent.
+  \end{itemize}
+\end{itemize}
+
+\section*{2. Modèle Mutualiste}
+
+\begin{itemize}
+  \item \textbf{Équations typiques} :
+  \[
+  \begin{cases}
+  x' = r_1 x \left(1 - \frac{x}{K_1} + \alpha y\right) \\
+  y' = r_2 y \left(1 - \frac{y}{K_2} + \beta x\right)
+  \end{cases}
+  \]
+  \item \textbf{Paramètres} :
+  $x$, $y$ : populations ; $r_1$, $r_2$ : taux de croissance ; $K_1$, $K_2$ : capacité de charge ; $\alpha$, $\beta$ : coopération.
+  \item \textbf{Questions classiques} :
+  \begin{itemize}
+    \item Que se passe-t-il si $\alpha$ ou $\beta = 0$ ? Le modèle devient logistique.
+    \item La coopération peut-elle être nuisible ? Si trop forte, elle peut déséquilibrer le système (explosion de population).
+  \end{itemize}
+\end{itemize}
+
+\section*{3. Modèle de Commensalisme}
+
+\begin{itemize}
+  \item \textbf{Équations typiques} :
+  \[
+  \begin{cases}
+  x' = r_1 x \left(1 - \frac{x}{K_1}\right) \\
+  y' = r_2 y \left(1 - \frac{y}{K_2} + \beta x\right)
+  \end{cases}
+  \]
+  \item \textbf{Questions typiques} :
+  \begin{itemize}
+    \item Que vaut $x'$ ? Il est indépendant de $y$, donc $x$ suit une dynamique logistique.
+    \item Pourquoi parle-t-on de commensalisme ? $x$ influence $y$ mais pas l’inverse.
+  \end{itemize}
+\end{itemize}
+
+\section*{4. Compétition Intraspécifique}
+
+\begin{itemize}
+  \item \textbf{Équation} :
+  \[
+  x' = r x \left(1 - \frac{x}{K}\right)
+  \]
+  \item \textbf{Questions classiques} :
+  \begin{itemize}
+    \item Que représente $K$ ? Le maximum durable de la population.
+    \item Quand $x > K$, que vaut $x'$ ? Il devient négatif $\Rightarrow$ la population diminue.
+  \end{itemize}
+\end{itemize}
+
+\section*{5. Modèle avec Ressource Externe (ex : SIR)}
+
+\begin{itemize}
+  \item \textbf{Équations typiques} :
+  \[
+  \begin{cases}
+  S' = -\beta SI \\
+  I' = \beta SI - \gamma I \\
+  R' = \gamma I
+  \end{cases}
+  \]
+  \item \textbf{Interprétation} :
+  \begin{itemize}
+    \item $S$ : personnes saines,
+    \item $I$ : infectés,
+    \item $R$ : guéris ou morts.
+  \end{itemize}
+  \item \textbf{Questions classiques} :
+  \begin{itemize}
+    \item Quand l’épidémie démarre-t-elle ? Si $I(0) > 0$ et $S$ est grand.
+    \item Quand l’épidémie s’arrête-t-elle ? Quand $I(t) \rightarrow 0$.
+    \item Quel est le rôle de $\beta/\gamma$ ? C’est le $R_0$ (nombre de reproduction de base).
+  \end{itemize}
+\end{itemize}
+
+\section*{6. Modèle Neutre}
+
+\begin{itemize}
+  \item \textbf{Équations} :
+  \[
+  \begin{cases}
+  x' = r_1 x \\
+  y' = r_2 y
+  \end{cases}
+  \]
+  \item \textbf{Questions typiques} :
+  \begin{itemize}
+    \item Les espèces interagissent-elles ? Non.
+    \item Que se passe-t-il si $r_1 > 0$ et $r_2 < 0$ ? $x$ croît et $y$ décroît.
+  \end{itemize}
+\end{itemize}
+
+\section*{Résumé des Signes des Termes Croisés (\(xy\))}
+
+\begin{center}
+\begin{tabular}{|l|c|c|l|}
+\hline
+Type            & Terme pour \(x'\) & Terme pour \(y'\) & Exemple               \\  
+\hline
+Compétitif      & \(-\)              & \(-\)              & Scorpions noirs/rouges \\  
+Proie-Prédateur & \(-\)              & \(+\)              & Lapins/Loups          \\  
+Mutualiste      & \(+\)              & \(+\)              & Plantes/Pollinisateurs \\  
+Commensalisme   & \(0\)              & \(+\)              & Rémora/Requin         \\  
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

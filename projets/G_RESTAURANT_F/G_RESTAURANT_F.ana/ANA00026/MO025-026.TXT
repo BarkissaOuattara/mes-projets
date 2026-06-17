@@ -1,0 +1,2 @@
+//MO025-026.TXT ANA00025 TO ANA00026
+Gerant	mot_de_passe	CLEU*		la rubrique mot_de_passe est maintenant une clé

@@ -1,0 +1,10 @@
+//MO005-006.TXT ANA00005 TO ANA00006
+Commande		TAR	42	nouvelle taille enregistrement : 42
+Commande	IDModeRèglement	RUB-		la rubrique IDModeRèglement est supprimée
+Commande	nomClient	RUB-		la rubrique nomClient est supprimée
+Commande	prenomClient	RUB-		la rubrique prenomClient est supprimée
+Commande	téléphoneClient	RUB-		la rubrique téléphoneClient est supprimée
+Commande	nomGerant	RUB-		la rubrique nomGerant est supprimée
+Commande	prénomGerant	RUB-		la rubrique prénomGerant est supprimée
+produit		TAR	246	nouvelle taille enregistrement : 246
+produit	categorie	RUB-		la rubrique categorie est supprimée

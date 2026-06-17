@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: employee-safety-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/safety}
+    username: postgres
+    password: "Barkissa"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: 8080
+
+firebase:
+  service-account-path: ${FIREBASE_SERVICE_ACCOUNT_PATH:}

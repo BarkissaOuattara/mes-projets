@@ -1,0 +1,7 @@
+//MO006-007.TXT ANA00006 TO ANA00007
+Client		TAR	431	nouvelle taille enregistrement : 431
+Client	Nom	TAI+	40	la rubrique Nom a comme nouvelle taille 81 au lieu de 41
+Client	Prénom	RUB-		la rubrique Prénom est supprimée
+Gerant		TAR	398	nouvelle taille enregistrement : 398
+Gerant	Nom	TAI+	40	la rubrique Nom a comme nouvelle taille 81 au lieu de 41
+Gerant	Prénom	RUB-		la rubrique Prénom est supprimée

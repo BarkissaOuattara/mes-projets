@@ -1,0 +1,3 @@
+//MO023-024.TXT ANA00023 TO ANA00024
+Facture		TAR	80	nouvelle taille enregistrement : 80
+Facture	DateFacture	CNW	Chaîne$Date (aaaammjj)	la rubrique DateFacture a pour nouveau type Chaîne

@@ -1,0 +1,19 @@
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <div [ngClass]="collapsed ? 'w-[60px]' : 'w-[250px]'"
+         class="transition-all duration-300 bg-gray-100 shadow-md h-full flex flex-col">
+  
+      <button pButton icon="pi pi-bars"
+              class="m-2 p-button-sm p-button-text"
+              (click)="collapsed = !collapsed">
+      </button>
+  
+      <p-panelMenu *ngIf="!collapsed" [model]="items" class="border-none shadow-none"></p-panelMenu>
+    </div>
+  
+    <!-- Main content -->
+    <div class="flex-1 p-6 bg-white">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  

@@ -1,0 +1,23 @@
+//MO000-001.TXT ANA00000 TO ANA00001
+ModeRèglement		NFI		nouveau fichier
+Client		NFI		nouveau fichier
+BonLivraison		NFI		nouveau fichier
+Commande		NFI		nouveau fichier
+Gerant		NFI		nouveau fichier
+Facture		NFI		nouveau fichier
+produit		NFI		nouveau fichier
+CategoriesPlat		NFI		nouveau fichier
+Commande_produit		NFI		nouveau fichier
+Client_BonLivraison		NWL	Client (IDClient) et BonLivraison (IDClient)	Nouvelle liaison entre les fichiers Client (IDClient) et BonLivraison (IDClient)
+Contrainte_ModeRèglement_Facture		NWL	ModeRèglement (IDModeRèglement) et Facture (IDModeRèglement)	Nouvelle liaison entre les fichiers ModeRèglement (IDModeRèglement) et Facture (IDModeRèglement)
+Client_Commande		NWL	Client (IDClient) et Commande (IDClient)	Nouvelle liaison entre les fichiers Client (IDClient) et Commande (IDClient)
+Contrainte_Gerant_Commande		NWL	Gerant (IDGerant) et Commande (IDGerant)	Nouvelle liaison entre les fichiers Gerant (IDGerant) et Commande (IDGerant)
+Commande_Facture		NWL	Commande (IDCommande) et Facture (IDCommande)	Nouvelle liaison entre les fichiers Commande (IDCommande) et Facture (IDCommande)
+Contrainte_produit_Commande		NWL	produit (IDProduit) et Commande_produit (IDProduit)	Nouvelle liaison entre les fichiers produit (IDProduit) et Commande_produit (IDProduit)
+Contrainte_Commande_produit		NWL	Commande (IDCommande) et Commande_produit (IDCommande)	Nouvelle liaison entre les fichiers Commande (IDCommande) et Commande_produit (IDCommande)
+Contrainte_CategoriesPlat_Plats		NWL	CategoriesPlat (IDCategoriesPlat) et produit (IDCategoriesPlat)	Nouvelle liaison entre les fichiers CategoriesPlat (IDCategoriesPlat) et produit (IDCategoriesPlat)
+Facture		FRN		
+produit		FRN		
+Facture	IDFacture	RRN		
+Facture	IDCommande	RRN		
+Facture	DateFacture	RRN		

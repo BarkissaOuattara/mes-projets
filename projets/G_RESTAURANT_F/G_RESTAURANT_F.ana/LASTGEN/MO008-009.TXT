@@ -1,0 +1,3 @@
+//MO008-009.TXT ANA00008 TO ANA00009
+Commande_produit		TAR	88	nouvelle taille enregistrement : 88
+Commande_produit	nom_produit	RUB+		nom_produit est une nouvelle rubrique

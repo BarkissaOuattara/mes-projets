@@ -1,0 +1,3 @@
+//MO024-025.TXT ANA00024 TO ANA00025
+Gerant		TAR	449	nouvelle taille enregistrement : 449
+Gerant	mot_de_passe	RUB+		mot_de_passe est une nouvelle rubrique

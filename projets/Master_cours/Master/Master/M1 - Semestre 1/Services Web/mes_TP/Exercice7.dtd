@@ -1,0 +1,8 @@
+<!ELEMENT Personne ( (M | Mme | Mlle), Prenom+, Nom ) >
+
+<!ELEMENT M EMPTY >
+<!ELEMENT Mme EMPTY >
+<!ELEMENT Mlle EMPTY >
+
+<!ELEMENT Nom (#PCDATA) >
+<!ELEMENT Prenom (#PCDATA) >

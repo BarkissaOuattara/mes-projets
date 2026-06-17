@@ -1,0 +1,11 @@
+package bf.olive.application_test.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "INTROUVABLE")
+public class ItemNotFoundException extends RuntimeException  {
+    public ItemNotFoundException(){
+        super();
+    }
+}

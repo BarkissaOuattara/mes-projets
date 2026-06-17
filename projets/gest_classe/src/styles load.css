@@ -1,0 +1,31 @@
+.swimming-fish-wrapper {
+    width: 100%;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .swimming-fish {
+    position: absolute;
+    font-size: 3rem;
+    animation: swimFish 2.5s ease-in-out infinite;
+  }
+  
+  @keyframes swimFish {
+    0% {
+      left: -10%;
+      transform: scaleX(1);
+    }
+    50% {
+      left: 50%;
+      transform: scaleX(1);
+    }
+    51% {
+      transform: scaleX(-1); /* Le poisson se retourne */
+    }
+    100% {
+      left: -10%;
+      transform: scaleX(-1);
+    }
+  }
+  

@@ -1,0 +1,29 @@
+Budget Manager est une application mobile de gestion de budget permettant aux utilisateurs de suivre leurs revenus et dépenses,
+ de catégoriser leurs transactions et de définir des budgets mensuels. L'application est développée en Java avec Android et utilise SQLite comme base de données locale.
+
+# Fonctionnalités
+
+    Gestion des utilisateurs (inscription, connexion, authentification sécurisée)
+
+    Suivi des transactions (ajout, suppression, modification)
+
+    Catégorisation des transactions (revenu, dépense)
+
+    Définition de budgets mensuels avec suivi des limites
+
+    Stockage des données en local avec SQLite
+
+# Technologies utilisées
+
+    Langage : Java
+
+    Base de données : SQLite
+
+    IDE : Android Studio
+
+    Frameworks et Bibliothèques : Android SDK, JavaFX (pour la conception graphique si applicable)
+
+# Installation et Exécution
+
+    copier le fichier app-debug.apk sur un telephone mobile et installer le.
+    ensuite creer un compte et commencer l'utilisation

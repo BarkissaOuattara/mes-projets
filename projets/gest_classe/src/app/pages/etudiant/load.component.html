@@ -1,0 +1,17 @@
+<p-dialog header="Chargement" [modal]="true" [(visible)]="isWorking" [style]="{ width: '25rem' }">
+  <div class="flex flex-col items-center gap-4">
+  <div class="running-pig-wrapper">
+      <svg class="running-pig" viewBox="0 0 512 512" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(0, 10)">
+          <circle cx="400" cy="90" r="10" fill="black" />
+          <path d="M100 200c0-50 40-90 90-90h140c50 0 90 40 90 90v40c0 40-30 80-80 80h-20c-10 10-30 10-40 0h-60c-10 10-30 10-40 0h-20c-50 0-80-40-80-80v-40z" fill="#f5a3a3" stroke="#d66565" stroke-width="5"/>
+          <circle cx="160" cy="170" r="10" fill="black"/>
+          <circle cx="350" cy="170" r="10" fill="black"/>
+          <path d="M210 180c10 20 30 20 40 0" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M90 220 q-10 -10 -20 0t20 20" fill="#f5a3a3"/>
+      </g>
+      </svg>
+  </div>
+  <p class="text-lg font-semibold text-center">chargement... ! 🐷💨</p>
+  </div>
+</p-dialog>

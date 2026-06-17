@@ -1,0 +1,8 @@
+//MO004-005.TXT ANA00004 TO ANA00005
+Commande		TAR	276	nouvelle taille enregistrement : 276
+Commande	nomClient	RUB+		nomClient est une nouvelle rubrique
+Commande	prenomClient	RUB+		prenomClient est une nouvelle rubrique
+Commande	téléphoneClient	RUB+		téléphoneClient est une nouvelle clé
+Commande	nomGerant	RUB+		nomGerant est une nouvelle rubrique
+Commande	prénomGerant	RUB+		prénomGerant est une nouvelle rubrique
+Commande	téléphoneClient	RRN		

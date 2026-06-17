@@ -1,0 +1,8 @@
+@use './tailwind.css';
+@use './assets/layout/layout.scss';
+@use 'primeicons/primeicons.css';
+@use './assets/demo/demo.scss';
+
+body {
+  @apply text-base md:text-lg;
+}

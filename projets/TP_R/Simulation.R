@@ -1,0 +1,49 @@
+# Paramètres du modèle SIS
+mu    <- 0.5
+beta  <- 0.014
+alpha <- 0.001
+S0    <- 0.2
+I0    <- 0.6
+
+# Système d'équations différentielles
+sis_model <- function(t, state, params) {
+  S <- state["S"]
+  I <- state["I"]
+  
+  dS <- mu - beta * S * I - mu * S
+  dI <- beta * S * I - (mu + alpha) * I
+  
+  list(c(dS, dI))
+}
+
+# Résolution avec deSolve
+library(deSolve)
+
+etat_initial <- c(S = S0, I = I0)
+temps        <- seq(0, 100, by = 0.1)
+
+sol <- ode(
+  y     = etat_initial,
+  times = temps,
+  func  = sis_model,
+  parms = NULL
+)
+
+sol <- as.data.frame(sol)
+
+# Tracé de S(t) et I(t)
+plot(sol$time, sol$S,
+     type = "l", col = "steelblue", lwd = 2,
+     ylim = range(c(sol$S, sol$I)),
+     xlab = "Temps t",
+     ylab = "Population",
+     main = "Modèle SIS – variations de S(t) et I(t)")
+
+lines(sol$time, sol$I,
+      col = "tomato", lwd = 2, lty = 2)
+
+legend("topright",
+       legend = c("S(t) – Susceptibles", "I(t) – Infectés"),
+       col    = c("steelblue", "tomato"),
+       lty    = c(1, 2), lwd = 2)
+

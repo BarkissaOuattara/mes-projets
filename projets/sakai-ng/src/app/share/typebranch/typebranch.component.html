@@ -1,0 +1,151 @@
+<p-toast></p-toast>
+
+<div class="card">
+  <div class="flex justify-between items-center mb-4">
+    <h4 class="text-5xl">Gestion des types de branchement</h4>
+    <p-button
+      label="Ajouter un type"
+      icon="pi pi-plus"
+      class="mr-2"
+      (onClick)="formVisible.next(true)"
+    ></p-button>
+  </div>
+</div>
+<div>
+  <p-table
+    [value]="typeBranchementTrouve ? [typeBranchementTrouve] :typeBranchList"
+    [rows]="10"
+    [loading]="loading"
+    [paginator]="true"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true"
+    dataKey="code"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} types"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex items-center justify-between">
+        <h5 class="m-0" class="text-3xl">Liste des types de branchement</h5>
+        <p-iconfield>
+  <p-inputicon styleClass="pi pi-search"></p-inputicon>
+  <input
+    pInputText
+    type="text"
+    placeholder="Rechercher..."
+    [(ngModel)]="codeRecherche"
+    (keyup)="onSearchCodeChange()"
+  />
+</p-iconfield>
+
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr class="text-2xl">
+        <th style="min-width: 12rem">Code</th>
+        <th style="min-width: 16rem">Calibrage</th>
+        <th style="min-width: 16rem">Libellé</th>
+        <th style="min-width: 16rem">Frais RCVRT</th>
+        <th style="min-width: 16rem">Frais Remise</th>
+        <th style="min-width: 16rem">Frais Repose</th>
+        <th style="min-width: 16rem">Frais Étal</th>
+        <th style="min-width: 16rem">Forfait Type Br.</th>
+        <th style="min-width: 16rem">Forfait Mnt Br.</th>
+        <th style="min-width: 16rem">Forfait Global</th>
+        <th style="min-width: 12rem">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-type>
+      <tr>
+        <td>{{ type.code }}</td>
+        <td>{{ type.calibrage }}</td>
+        <td>{{ type.libelle }}</td>
+        <td>{{ type.fraisrcvrt }}</td>
+        <td>{{ type.fraisremise }}</td>
+        <td>{{ type.fraisrepose }}</td>
+        <td>{{ type.fraisetal }}</td>
+        <td>{{ type.forfTypebr }}</td>
+        <td>{{ type.forfMntBran }}</td>
+        <td>{{ type.forfGle }}</td>
+        <td>
+          <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="updateTypeBranch(type)" />
+          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (onClick)="deleteTypeBranch($event, type)" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="Formulaire Type de Branchement"
+  [modal]="true"
+  [(visible)]="formVisible.value"
+  [style]="{ width: '40rem' }"
+>
+  <div class="font-bold mb-2">
+    {{ typeBranchForm.get('code')?.value ? 'Modification' : 'Nouveau type de branchement' }}
+  </div>
+
+  <form [formGroup]="typeBranchForm" (ngSubmit)="submitTypeBranchForm()">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="font-semibold block mb-1">Code</label>
+        <input pInputText formControlName="code" class="w-full" [disabled]="isEditMode" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Calibrage</label>
+        <input pInputText formControlName="calibrage" class="w-full" />
+      </div>
+
+      <div class="col-span-2">
+        <label class="font-semibold block mb-1">Libellé</label>
+        <input pInputText formControlName="libelle" class="w-full" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Frais RCVRT</label>
+        <input type="number" pInputText formControlName="fraisrcvrt" class="w-full" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Frais Remise</label>
+        <input type="number" pInputText formControlName="fraisremise" class="w-full" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Frais Repose</label>
+        <input type="number" pInputText formControlName="fraisrepose" class="w-full" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Frais Étal</label>
+        <input type="number" pInputText formControlName="fraisetal" class="w-full" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Forfait Type Br.</label>
+        <input type="number" pInputText formControlName="forfTypebr" class="w-full" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Forfait Mnt Br.</label>
+        <input type="number" pInputText formControlName="forfMntBran" class="w-full" />
+      </div>
+
+      <div>
+        <label class="font-semibold block mb-1">Forfait Global</label>
+        <input type="number" pInputText formControlName="forfGle" class="w-full" />
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-6">
+      <p-button label="Annuler" severity="secondary" (click)="closeForm()" />
+      <p-button type="submit" label="Enregistrer" severity="info" [disabled]="typeBranchForm.invalid" />
+    </div>
+  </form>
+</p-dialog>
+
+<p-confirm-dialog></p-confirm-dialog>

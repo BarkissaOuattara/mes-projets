@@ -1,0 +1,72 @@
+
+<div class="bg-slate-300 p-4 rounded-lg">
+    <p-toast></p-toast>
+    <p-confirmPopup></p-confirmPopup>
+
+    <p-table
+    [loading]="isWorking()"
+    [value]="etudiantList()"
+        stripedRows
+        showGridlines>
+
+    <ng-template pTemplate="caption">
+        <div class="flex justify-between px-4 items-center">
+        <h2 class="text-3xl font-bold">Liste des étudiants</h2>
+        <p-button (onClick)="formVisible.set(true)" icon="pi pi-plus" [rounded]="true" severity="info" [outlined]="true"></p-button>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+        <th>Matricule</th>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Classe</th>
+        <th>Actions</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-etudiant>
+        <tr>
+        <td>{{ etudiant.matricule }}</td>
+        <td>{{ etudiant.nom }}</td>
+        <td>{{ etudiant.prenom }}</td>
+        <td>{{ etudiant.classe?.nom }}</td>
+        <td>
+            <div class="flex justify-end gap-2">
+            <p-button (onClick)="updateEtudiant(etudiant)" icon="pi pi-pencil" severity="info" [rounded]="true"/>
+            <p-button (onClick)="deleteClasse($event, etudiant)" icon="pi pi-trash" severity="danger" [rounded]="true"/>
+            </div>
+        </td>
+        </tr>
+    </ng-template>
+    </p-table>
+
+
+    <p-dialog header="Classe" [modal]="true" [(visible)]="formVisible" [style]="{ width: '25rem' }">
+        <form (ngSubmit)="submitClassForm()" [formGroup]="classeForm">
+            <p-select formControlName="classe" [options]="classeList()" optionLabel="nom" placeholder="Selectionne une classe" class="w-full md:w-56" />
+            <div class="flex flex-col gap-2">
+                <label for="matricule" class="font-bold">Matricule</label>
+                <input pInputText id="nom" aria-describedby="username-help" formControlName="matricule" />
+                <small id="nom">Entrez votre matricule</small>
+
+                <label for="nom" class="font-bold">Nom</label>
+                <input pInputText id="nom" aria-describedby="username-help" formControlName="nom" />
+                <small id="nom">Entrez votre nom</small>
+
+                <label for="prenom" class="font-bold">Prenom</label>
+                <input pInputText id="nom" aria-describedby="username-help" formControlName="prenom" />
+                <small id="nom">Entrez votre prenom</small>
+                
+            </div>
+
+            
+            <div class="flex justify-end gap-2">
+                <p-button label="Annuler" severity="secondary" (click)="closeForm()" />
+                <p-button type="submit" label="Enregistrer" severity="info" [disabled]="classeForm.invalid" />
+            </div>
+        </form>
+    </p-dialog>
+
+

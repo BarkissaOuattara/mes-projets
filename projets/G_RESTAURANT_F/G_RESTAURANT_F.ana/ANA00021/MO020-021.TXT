@@ -1,0 +1,5 @@
+//MO020-021.TXT ANA00020 TO ANA00021
+Ligne_De_Commande		NNF*	Commande_produit	nouveau nom Ligne_De_Commande
+BonLivraison		FIC-	BonLivraison	Fichier supprimé BonLivraison
+Client_BonLivraison		DEL	Client (IDClient) et BonLivraison (IDClient)	Liaison supprimée entre les fichiers Client (IDClient) et BonLivraison (IDClient)
+Ligne_De_Commande		FRN		

@@ -1,0 +1,41 @@
+# Node / Angular
+node_modules/
+dist/
+build/
+.angular/
+.cache/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+env/
+*.sqlite3
+db.sqlite3
+
+# Django
+*.log
+media/
+staticfiles/
+
+# Environnements
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Archives / installateurs
+*.zip
+*.rar
+*.7z
+*.iso
+*.exe
+*.msi

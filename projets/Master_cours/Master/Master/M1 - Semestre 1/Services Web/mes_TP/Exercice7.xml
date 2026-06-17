@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Personne SYSTEM "Exercice7.dtd">
+
+<Personne>
+	<M/>
+	<Prenom>Imraan</Prenom>
+	<Nom>SORGHO</Nom>
+</Personne>

@@ -1,0 +1,12 @@
+//MO017-018.TXT ANA00017 TO ANA00018
+ModeRèglement		FCNX+	Connexion HFSQL Classic	
+Client		FCNX+	Connexion HFSQL Classic	
+BonLivraison		FCNX+	Connexion HFSQL Classic	
+Commande		FCNX+	Connexion HFSQL Classic	
+Gerant		FCNX+	Connexion HFSQL Classic	
+Facture		FCNX+	Connexion HFSQL Classic	
+produit		FCNX+	Connexion HFSQL Classic	
+CategoriesPlat		FCNX+	Connexion HFSQL Classic	
+Commande_produit		FCNX+	Connexion HFSQL Classic	
+Connexion HFSQL Classic		CNX+		
+Connexion à '127.0.0.1'		CNX+		

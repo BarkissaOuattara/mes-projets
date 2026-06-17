@@ -1,0 +1,20 @@
+//MO016-017.TXT ANA00016 TO ANA00017
+ModeRèglement		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+ModeRèglement		FCNX+	Connexion HFSQL Classic	
+Client		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+Client		FCNX+	Connexion HFSQL Classic	
+BonLivraison		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+BonLivraison		FCNX+	Connexion HFSQL Classic	
+Commande		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+Commande		FCNX+	Connexion HFSQL Classic	
+Gerant		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+Gerant		FCNX+	Connexion HFSQL Classic	
+Facture		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+Facture		FCNX+	Connexion HFSQL Classic	
+produit		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+produit		FCNX+	Connexion HFSQL Classic	
+CategoriesPlat		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+CategoriesPlat		FCNX+	Connexion HFSQL Classic	
+Commande_produit		BASE		La base du fichier est passée de HFSQL Client/Serveur à HFSQL Classic
+Commande_produit		FCNX+	Connexion HFSQL Classic	
+Connexion HFSQL Classic		CNX+		

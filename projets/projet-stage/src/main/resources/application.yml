@@ -1,0 +1,19 @@
+spring:
+    application:
+        name: Ges-cli
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                '[format_sql]': true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+    datasource:
+        url: jdbc:postgresql://localhost:5432/Ges_cli
+        username: postgres
+        password: "Barkissa"
+server:
+    port: 5000
+

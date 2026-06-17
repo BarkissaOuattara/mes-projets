@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: Universite
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Cours
+    username: postgres
+    password: "Barkissa"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 5000

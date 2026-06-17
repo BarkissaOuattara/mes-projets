@@ -1,0 +1,7 @@
+//MO011-012.TXT ANA00011 TO ANA00012
+Commande		TAR	50	nouvelle taille enregistrement : 50
+Commande	IDModeRèglement	RUB+		IDModeRèglement est une nouvelle clé
+Facture		TAR	38	nouvelle taille enregistrement : 38
+Facture	IDModeRèglement	RUB-		la rubrique IDModeRèglement est supprimée
+Contrainte_ModeRèglement_Commande		NWL	ModeRèglement (IDModeRèglement) et Commande (IDModeRèglement)	Nouvelle liaison entre les fichiers ModeRèglement (IDModeRèglement) et Commande (IDModeRèglement)
+Contrainte_ModeRèglement_Facture		DEL	ModeRèglement (IDModeRèglement) et Facture (IDModeRèglement)	Liaison supprimée entre les fichiers ModeRèglement (IDModeRèglement) et Facture (IDModeRèglement)

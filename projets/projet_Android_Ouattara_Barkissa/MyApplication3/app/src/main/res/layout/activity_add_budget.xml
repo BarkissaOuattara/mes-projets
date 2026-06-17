@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/et_budget_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nom du budget"
+        />
+
+    <EditText
+        android:id="@+id/et_budget_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Montant du budget" />
+
+    <EditText
+        android:id="@+id/et_budget_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date (AAAA-MM-JJ)"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/et_budget_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mois (ex: Mars)" />
+
+    <Button
+        android:id="@+id/btn_add_budget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajouter Budget" />
+
+</LinearLayout>

@@ -1,0 +1,75 @@
+@startuml
+
+class Produit {
+  - code_produit : String
+  - designation : String
+  - prix_unitaire : Decimal
+  - marque : String
+  - poids : Decimal
+  - taille : String
+  - photo : Blob
+  - date_fabrication : Date
+}
+
+class MediaProduit {
+  - id_media : int
+  - type_media : String
+  - nom_fichier : String
+  - fichier : Blob
+  - date_ajout : Date
+}
+
+class Fournisseur {
+  - id_fournisseur : int
+  - nom : String
+  - adresse : String
+}
+
+class ProduitFournisseur {
+  - code_produit_fournisseur : String
+  - numero_fournisseur_produit : int
+  - prix_achat : Decimal
+}
+
+class BonLivraisonProduit {
+  - id_bon_livraison_produit : int
+  - nom_fournisseur : int
+  - code_produit_livre : String
+  - quantite_livree : Decimal
+  - prix_unitaire : Decimal
+}
+
+class Agent {
+  - id_agent : String
+  - nom : String
+  - prenom : String
+}
+
+class Mouvement {
+  - id_mouvement : int
+  - date_mouvement : Date
+  - quantite : Decimal
+  - type_mouvement : String
+}
+
+class BonSortieProduit {
+  - id_bon_sortie_produit : int
+  - id_agent : int
+  - code_produit_sortie : String
+  - quantite_sortie : int
+  - prix_unitaire : Decimal
+}
+
+
+' Positionnement logique
+Fournisseur "1" -left-> "0..*" Produit : fourni par
+MediaProduit "0..*" -down-> "1" Produit : appartient à
+ProduitFournisseur "1" -right-> "1" Produit : référence
+ProduitFournisseur "1" -up-> "1" Fournisseur : référence
+BonLivraisonProduit "0..*" -down-> "1" Produit : contient
+BonSortieProduit "0..*" -right-> "1" Produit : contient
+Agent "1" -down-> "0..*" Mouvement : effectué par
+Agent "1" -right-> "0..*" BonSortieProduit : effectué par
+Mouvement "0..*" -up-> "1" Produit : concerne
+
+@enduml

@@ -1,0 +1,114 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\title{Correction du TD 1 – Introduction à la Compilation}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Partie A – Questions de cours (10 points)}
+
+\subsection*{Q1. (1 pt) Définition du processus de compilation}
+La compilation est un processus de traduction qui transforme un programme écrit dans un langage source (haut niveau) en un programme équivalent dans un langage cible (bas niveau, souvent en code machine). Ce processus comprend généralement plusieurs phases d'analyse et de synthèse.
+
+\subsection*{Q2. (2 pts) Six phases principales de compilation}
+\begin{enumerate}
+    \item \textbf{Analyse lexicale} : Découpe le code source en tokens (unités lexicales).
+    \item \textbf{Analyse syntaxique} : Vérifie la structure grammaticale et construit un arbre syntaxique.
+    \item \textbf{Analyse sémantique} : Vérifie la cohérence des types et des déclarations.
+    \item \textbf{Génération de code intermédiaire} : Produit une représentation intermédiaire indépendante de la machine.
+    \item \textbf{Optimisation} : Améliore le code intermédiaire pour des performances accrues.
+    \item \textbf{Génération de code machine} : Traduit le code optimisé en langage cible.
+\end{enumerate}
+
+\subsection*{Q3. (1 pt) Arbre syntaxique concret vs AST}
+\begin{itemize}
+    \item \textbf{Arbre syntaxique concret} : Représentation détaillée incluant tous les éléments grammaticaux (parenthèses, opérateurs, etc.).
+    \item \textbf{AST (Arbre de Syntaxe Abstraite)} : Simplifié, ne retient que les éléments essentiels à la sémantique du programme (opérations, variables, etc.).
+\end{itemize}
+
+\subsection*{Q4. (1 pt) Frontend vs Backend}
+\begin{itemize}
+    \item \textbf{Frontend} : Gère les phases d'analyse (lexicale, syntaxique, sémantique) et dépend du langage source.
+    \item \textbf{Backend} : Gère la génération et l'optimisation du code cible, dépendant de l'architecture machine.
+\end{itemize}
+
+\subsection*{Q5. (1 pt) Utilité de la table des symboles}
+La table des symboles stocke les informations sur les identifiants (variables, fonctions, etc.) comme leur type, portée, et adresse mémoire. Elle est cruciale pour la vérification sémantique et la génération de code.
+
+\subsection*{Q6. (1 pt) Erreurs détectées durant la compilation}
+\begin{itemize}
+    \item \textbf{Erreur lexicale} : Caractère invalide (détectée lors de l'analyse lexicale).
+    \item \textbf{Erreur syntaxique} : Structure incorrecte (détectée lors de l'analyse syntaxique).
+\end{itemize}
+
+\subsection*{Q7. (1 pt) Rôle du chargeur et de l'éditeur de liens}
+\begin{itemize}
+    \item \textbf{Chargeur (loader)} : Charge le programme compilé en mémoire pour exécution.
+    \item \textbf{Éditeur de liens (linker)} : Combine plusieurs modules objet en un seul exécutable, résolvant les références croisées.
+\end{itemize}
+
+\subsection*{Q8. (2 pts) Outils pour la construction de compilateurs}
+\begin{itemize}
+    \item \textbf{Lex/Yacc} : Génèrent des analyseurs lexicaux (Lex) et syntaxiques (Yacc).
+    \item \textbf{LLVM} : Infrastructure pour l'optimisation et la génération de code multi-plateforme.
+    \item \textbf{ANTLR} : Outil puissant pour générer des analyseurs syntaxiques à partir de grammaires.
+\end{itemize}
+
+\section*{Partie B – Questions d'analyse et réflexion (6 points)}
+
+\subsection*{Q9. (2 pts) Exemple d'expression et arbres}
+\textbf{Expression} : \(3 + 4 * 5\)
+
+\begin{itemize}
+    \item \textbf{Arbre syntaxique concret} :
+    \begin{tikzpicture}[level distance=1.5cm, level 1/.style={sibling distance=3cm}, level 2/.style={sibling distance=1.5cm}]
+        \node {+}
+            child {node {3}}
+            child {node {*}
+                child {node {4}}
+                child {node {5}}
+            };
+    \end{tikzpicture}
+
+    \item \textbf{AST} :
+    \begin{tikzpicture}[level distance=1.5cm, level 1/.style={sibling distance=3cm}, level 2/.style={sibling distance=1.5cm}]
+        \node {+}
+            child {node {3}}
+            child {node {*}
+                child {node {4}}
+                child {node {5}}
+            };
+    \end{tikzpicture}
+\end{itemize}
+
+\subsection*{Q10. (2 pts) Importance du code intermédiaire}
+Le code intermédiaire permet une séparation claire entre les phases d'analyse et de synthèse, facilitant la portabilité et les optimisations. Générer directement le code machine limiterait la flexibilité et rendrait le compilateur dépendant d'une architecture spécifique.
+
+\subsection*{Q11. (2 pts) Risques de l'optimisation}
+L'optimisation peut introduire des bugs si elle modifie involontairement la sémantique du programme. Exemple : Supprimer une boucle vide qui servait à une temporisation.
+
+\section*{Partie C – Mini recherche (4 points)}
+
+\subsection*{Q12. (2 pts) Contribution de Aho et al.}
+L'ouvrage de Aho, Sethi, et Ullman ("Compilateurs: Principes, Techniques et Outils") est une référence majeure. Il formalise les concepts clés de la compilation (analyse LR, génération de code) et reste un fondement académique et industriel.
+
+\subsection*{Q13. (2 pts) Caractéristiques d'un compilateur moderne}
+\textbf{LLVM} :
+\begin{itemize}
+    \item Infrastructure modulaire pour la compilation, l'optimisation, et la génération de code.
+    \item Utilisée par Clang (frontend pour C/C++) et supportant multiples langages et cibles.
+    \item Optimisations agressives et représentation intermédiaire (IR) flexible.
+\end{itemize}
+
+\end{document}

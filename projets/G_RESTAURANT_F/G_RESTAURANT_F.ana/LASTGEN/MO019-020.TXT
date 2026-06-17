@@ -1,0 +1,2 @@
+//MO019-020.TXT ANA00019 TO ANA00020
+produit	NomProduit	NNR	NomPlat	ATTENTION : la clé NomPlat a pour nouveau nom NomProduit

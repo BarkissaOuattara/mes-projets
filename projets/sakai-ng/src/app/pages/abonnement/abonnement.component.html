@@ -1,0 +1,227 @@
+<p-toast></p-toast>
+
+<div class="card">
+    <div class="flex justify-between items-center mb-4">
+        <h4 class="text-5xl">Gestion des abonnements</h4>
+        <p-button label="Ajouter un abonnement" icon="pi pi-plus" class="mr-2" (onClick)="openNew()"> </p-button>
+    </div>
+</div>
+
+<p-table
+    [value]="abonnementListFiltered.length > 0 || searchNumPolice ? abonnementListFiltered : abonnementList()"
+    [rows]="10"
+    [loading]="isWorking"
+    [paginator]="true"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true"
+    dataKey="code"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} abonnements"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+>
+    <ng-template pTemplate="caption">
+        <div class="flex items-center justify-between">
+            <h5 class="m-0" class="text-3xl">Liste des abonnements</h5>
+
+            <p-iconfield>
+  <p-inputicon icon="pi pi-search"></p-inputicon>
+  <input
+    type="text"
+    pInputText
+    [(ngModel)]="searchNumPolice"
+    (keyup.enter)="searchByNumPolice()"
+    placeholder="Numéro de police..."
+    name="searchNumPolice"
+    (ngModelChange)="onSearchNumPoliceChange($event)"
+
+  />
+</p-iconfield>
+
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr class="text-2xl">
+            <th style="min-width: 18rem">Numéro Police</th>
+            <th style="min-width: 16rem">Nom</th>
+            <th style="min-width: 16rem">Prénom</th>
+            <th style="min-width: 16rem">Lot</th>
+            <th style="min-width: 16rem">Parcelle</th>
+            <th style="min-width: 16rem">Rang</th>
+            <th style="min-width: 16rem">Section</th>
+            <th style="min-width: 16rem">Tarif</th>
+            <th style="min-width: 16rem">Type Branch</th>
+            <th style="min-width: 16rem">Code Exploitation</th>
+            <th style="min-width: 16rem">Statut</th>
+            <th style="min-width: 16rem">Date Début</th>
+            <th style="min-width: 16rem">Date Résiliation</th>
+            <th style="min-width: 12rem">Actions</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-abonnement>
+        <tr>
+            <td>{{ abonnement.numPol }}</td>
+            <td>{{ abonnement.abonne?.nom }}</td>
+            <td>{{ abonnement.abonne?.prenom }}</td>
+            <td>{{ abonnement.branchement?.lot }}</td>
+            <td>{{ abonnement.branchement?.parcelle }}</td>
+            <td>{{ abonnement.branchement?.rang }}</td>
+            <td>{{ abonnement.branchement?.section }}</td>
+            <td>{{ abonnement.tarif?.libelle }}</td>
+            <td>{{ abonnement.branchement?.typeBranch?.libelle || '-' }}</td>
+            <td>{{ abonnement.branchement?.exploitation?.code || '-' }}</td>
+            <td>{{ abonnement.statut }}</td>
+            <td>{{ abonnement.dateDebut | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ abonnement.dateResiliation ? (abonnement.dateResiliation | date: 'yyyy-MM-dd') : '-' }}</td>
+            <td>
+                <p-button *ngIf="abonnement.statut == 'A'" icon="pi pi-ban" severity="danger" [rounded]="true" [outlined]="true" (onClick)="resilierAbonnement(abonnement)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="abonnementDialog" [style]="{ width: '75%' }" header="Détails de l'abonnement" [modal]="true" [closable]="false">
+    <ng-template pTemplate="content">
+        <form [formGroup]="abonnementForm" class="flex flex-col gap-4" (ngSubmit)="saveAbonnement()">
+            <h4>Branchement</h4>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="field">
+                    <label for="codeExpl" class="block font-bold mb-2">Exploitation</label>
+                    <p-select id="codeExpl" formControlName="codeExpl" [options]="exploitationList()" optionLabel="code" optionValue="code" placeholder="Sélectionner une exploitation" class="w-full"> </p-select>
+                </div>
+                <div>
+                    <label for="section" class="block font-bold mb-2">Section</label>
+                    <input id="section" type="text" pInputText formControlName="section" class="w-full" />
+                </div>
+                <div class="field">
+                    <label for="lot" class="block font-bold mb-2">Lot</label>
+                    <input id="lot" type="number" pInputText formControlName="lot" class="w-full" />
+                </div>
+                <div>
+                    <label for="parcelle" class="block font-bold mb-2">Parcelle</label>
+                    <input id="parcelle" type="number" pInputText formControlName="parcelle" class="w-full" />
+                </div>
+                <div>
+                    <label for="rang" class="block font-bold mb-2">Rang</label>
+                    <input id="rang" type="number" pInputText formControlName="rang" class="w-full" />
+                </div>
+            </div>
+            <div class="flex justify-end mb-4">
+                <button pButton label="Charger infos" icon="pi pi-search" type="button" (click)="chercherBranchement()"></button>
+            </div>
+
+            @if (branchementload()) {
+                <hr />
+                <h4>Abonné</h4>
+
+                <div>
+                    <div>
+                        <label for="numPol" class="block font-bold mb-2">Numéro Police</label>
+                        <input id="numPol" type="number" pInputText formControlName="numPol" class="w-full" />
+                    </div>
+                </div>
+
+                <div class="flex justify-end mb-4">
+                    <button pButton label="Charger infos" icon="pi pi-search" type="button" (click)="chercherAbonne()"></button>
+                </div>
+            }
+
+            @if (abonneload()) {
+                <hr />
+                <h4>Abonnement</h4>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="field">
+                        <label for="abonne" class="block font-bold mb-2">Nom</label>
+                        <input id="numPol" type="text" pInputText formControlName="nom" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label for="abonne" class="block font-bold mb-2">Prenom</label>
+                        <input id="numPol" type="text" pInputText formControlName="prenom" class="w-full" />
+                    </div>
+
+                    <div class="field">
+                        <label for="statut" class="block font-bold mb-2">Statut</label>
+                        <p-select inputId="statut" [options]="statutOptions" placeholder="Sélectionner un statut" formControlName="statut" class="w-full"> </p-select>
+                    </div>
+
+                    <div>
+                        <label for="typeBranchement" class="block font-bold mb-2">Type de branchement</label>
+                        <p-select id="typeBranchement" pInputText formControlName="typeBranchement" [options]="typeBranchList()" optionLabel="libelle" placeholder="Sélectionner un type de branchement" class="w-full"> </p-select>
+                    </div>
+                </div>
+
+
+                <div>
+                    <label for="tarif">Tarif</label>
+                    <p-select id="tarif" pInputText formControlName="tarif" [options]="tarifList()" optionLabel="libelle" placeholder="Sélectionner un tarif" class="w-full"> </p-select>
+                </div>
+
+                <div class="info-abonne mt-4" *ngIf="abonne">
+                    <p><strong>Nom :</strong> {{ abonne.nom || '' }}</p>
+                    <p><strong>Prénom :</strong> {{ abonne.prenom || '' }}</p>
+                </div>
+
+                <div class="info-branchement mt-4" *ngIf="typeBranch && tarif">
+                    <p><strong>Type Branchement :</strong> {{ typeBranch.libelle || '' }}</p>
+                </div>
+            }
+
+            <div class="flex justify-end gap-3 mt-6">
+                <p-button label="Annuler" severity="secondary" (click)="hideDialog()" />
+                <p-button type="submit" label="Enregistrer" severity="info" />
+            </div>
+        </form>
+    </ng-template>
+</p-dialog>
+
+<!-- DIALOG RÉSILIATION -->
+<p-dialog [(visible)]="resiliationDialog" [style]="{ width: '600px' }" header="Résiliation d'un abonnement" [modal]="true" [closable]="true">
+    <ng-template pTemplate="content">
+        <form [formGroup]="resiliationForm" class="flex flex-col gap-4" (ngSubmit)="submitResiliation()">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="field">
+                    <label for="codeExpl" class="block font-bold mb-2">Exploitation</label>
+                    <p-select id="codeExpl" formControlName="codeExpl" [options]="exploitationList()" optionLabel="code" optionValue="code" placeholder="Sélectionner une exploitation" class="w-full"> </p-select>
+                </div>
+
+                <div class="field">
+                    <label for="statut" class="block font-bold mb-2">Statut</label>
+                    <p-select inputId="statut" [options]="statutOptions" placeholder="Sélectionner un statut" formControlName="statut" class="w-full"> </p-select>
+                </div>
+
+                <div>
+                    <label for="section" class="block font-bold mb-2">Section</label>
+                    <input id="section" type="text" pInputText formControlName="section" class="w-full" />
+                </div>
+                <div class="field">
+                    <label for="lot" class="block font-bold mb-2">Lot</label>
+                    <input id="lot" type="number" pInputText formControlName="lot" class="w-full" />
+                </div>
+                <div>
+                    <label for="parcelle" class="block font-bold mb-2">Parcelle</label>
+                    <input id="parcelle" type="number" pInputText formControlName="parcelle" class="w-full" />
+                </div>
+                <div>
+                    <label for="rang" class="block font-bold mb-2">Rang</label>
+                    <input id="rang" type="number" pInputText formControlName="rang" class="w-full" />
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <label for="numPol" class="block font-bold mb-2">Numéro Police</label>
+                    <input id="numPol" type="number" pInputText formControlName="numPol" class="w-full" />
+                </div>
+            </div>
+
+            <div class="flex justify-end mt-6 gap-3">
+                <p-button label="Annuler" severity="secondary" (click)="hideResiliationDialog()" />
+                <p-button label="Résilier" severity="danger" type="submit" [disabled]="resiliationForm.invalid" />
+            </div>
+        </form>
+    </ng-template>
+</p-dialog>
+<p-confirm-dialog></p-confirm-dialog>

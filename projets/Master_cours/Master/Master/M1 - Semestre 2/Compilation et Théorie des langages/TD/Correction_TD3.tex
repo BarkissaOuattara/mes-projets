@@ -1,0 +1,152 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\title{Correction du TD 3 – Analyse Syntaxique}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1 : Comprendre les grammaires}
+
+\subsection*{1. Exemples d'expressions valides}
+\begin{itemize}
+    \item \(a + b\)
+    \item \(a * b + c\)
+    \item \((a + b) * c\)
+\end{itemize}
+
+\subsection*{2. Terminaux et non-terminaux}
+\begin{itemize}
+    \item \textbf{Terminaux} : \(+, *, (, ), \text{id}\) (où \(\text{id}\) représente un identifiant comme \(a, b, c\)).
+    \item \textbf{Non-terminaux} : \(\text{Expr}, \text{Term}, \text{Factor}\).
+\end{itemize}
+
+\subsection*{3. Symbole de départ}
+Le symbole de départ est \(\text{Expr}\).
+
+\section*{Exercice 2 : Arbre de dérivation}
+
+\subsection*{1. Arbre syntaxique concret}
+\begin{tikzpicture}[level distance=1.5cm, level 1/.style={sibling distance=3cm}, level 2/.style={sibling distance=1.5cm}]
+    \node {Expr}
+        child {node {Expr}
+            child {node {Term}
+                child {node {Factor}
+                    child {node {\(a\)}}
+                }
+            }
+        }
+        child {node {\(+\)}}
+        child {node {Term}
+            child {node {Term}
+                child {node {Factor}
+                    child {node {\(b\)}}
+                }
+            }
+            child {node {\(*\)}}
+            child {node {Factor}
+                child {node {\(c\)}}
+            }
+        };
+\end{tikzpicture}
+
+\subsection*{2. Arbre syntaxique abstrait (AST)}
+\begin{tikzpicture}[level distance=1.5cm, level 1/.style={sibling distance=3cm}, level 2/.style={sibling distance=1.5cm}]
+    \node {\(+\)}
+        child {node {\(a\)}}
+        child {node {\(*\)}
+            child {node {\(b\)}}
+            child {node {\(c\)}}
+        };
+\end{tikzpicture}
+
+\subsection*{3. Priorité de la multiplication}
+La multiplication est prioritaire car la grammaire impose que les termes (\(\text{Term}\)) soient évalués avant les expressions (\(\text{Expr}\)). Ainsi, \(b * c\) est regroupé avant l'addition \(a + \ldots\).
+
+\section*{Exercice 3 : Ambiguïté de grammaire}
+
+\subsection*{1. Exemple d'instruction ambiguë}
+\[
+\text{if } E \text{ then if } F \text{ then } A \text{ else } B
+\]
+
+\subsection*{2. Deux arbres de dérivation possibles}
+\begin{itemize}
+    \item \textbf{Interprétation 1} : Le \texttt{else} se rapporte au deuxième \texttt{if} :
+    \begin{verbatim}
+    if E then (if F then A else B)
+    \end{verbatim}
+    
+    \item \textbf{Interprétation 2} : Le \texttt{else} se rapporte au premier \texttt{if} :
+    \begin{verbatim}
+    if E then (if F then A) else B
+    \end{verbatim}
+\end{itemize}
+
+\subsection*{3. Règle pour lever l'ambiguïté}
+La règle habituelle est d'associer le \texttt{else} au \texttt{if} le plus proche (\textit{closest nested rule}).
+
+\section*{Exercice 4 : Grammaire non ambiguë et factorisée}
+
+\subsection*{Grammaire modifiée}
+\[
+\begin{aligned}
+\text{Expr} &\rightarrow \text{Term } \text{Expr}' \\
+\text{Expr}' &\rightarrow + \text{Term } \text{Expr}' \mid \epsilon \\
+\text{Term} &\rightarrow \text{Factor } \text{Term}' \\
+\text{Term}' &\rightarrow * \text{Factor } \text{Term}' \mid \epsilon \\
+\text{Factor} &\rightarrow (\text{Expr}) \mid \text{id}
+\end{aligned}
+\]
+
+\section*{Exercice 5 : Analyse descendante vs ascendante}
+
+\subsection*{1. Analyse descendante}
+L'analyse descendante part du symbole de départ et applique les règles de production pour dériver la chaîne d'entrée. Elle est souvent utilisée pour les grammaires LL.
+
+\subsection*{2. Analyse ascendante}
+L'analyse ascendante part de la chaîne d'entrée et tente de la réduire au symbole de départ en utilisant les règles de production à l'envers. Elle est adaptée aux grammaires LR.
+
+\subsection*{3. Avantages}
+\begin{itemize}
+    \item \textbf{Descendante} : Simple à implémenter pour les grammaires non ambiguës.
+    \item \textbf{Ascendante} : Plus puissante, capable de gérer des grammaires complexes (ex. : LR(1)).
+\end{itemize}
+
+\section*{Exercice 6 (Bonus) : Analyse descendante}
+
+\subsection*{1. Vérification de \(x y z\)}
+La chaîne \(x y z\) est valide car elle peut être dérivée à partir de \(S\) :
+\[
+S \rightarrow A B \rightarrow x A B \rightarrow x y B \rightarrow x y z
+\]
+
+\subsection*{2. Tableau d'analyse}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Étape & Pile & Texte à analyser & Action \\
+\hline
+0 & \(S\) & \(x y z\) & \(S \rightarrow A B\) \\
+1 & \(A B\) & \(x y z\) & \(A \rightarrow x A\) \\
+2 & \(x A B\) & \(x y z\) & Consommer \(x\) \\
+3 & \(A B\) & \(y z\) & \(A \rightarrow y\) \\
+4 & \(y B\) & \(y z\) & Consommer \(y\) \\
+5 & \(B\) & \(z\) & \(B \rightarrow z\) \\
+6 & \(z\) & \(z\) & Consommer \(z\) \\
+7 & (vide) & (vide) & Acceptation \\
+\hline
+\end{tabular}
+
+\subsection*{3. Conclusion}
+La chaîne \(x y z\) est valide car l'analyse descendante aboutit à une acceptation complète.
+
+\end{document}

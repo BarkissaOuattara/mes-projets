@@ -1,0 +1,37 @@
+spring:
+    application:
+        name: Ges-cli
+
+        # Security config
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://localhost:8080/realms/Sonabel
+                    jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+    #JWT Config
+    jwt:
+        auth:
+            convertor:
+            resource-id: gestion-abonnement
+            principal-attribute: principal_username
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                '[format_sql]': true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+    datasource:
+        url: jdbc:postgresql://localhost:5432/Ges_cli
+        username: postgres
+        password: "Barkissa"
+
+        
+server:
+    port: 5000
+

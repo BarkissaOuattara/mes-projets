@@ -1,0 +1,192 @@
+<p-toast></p-toast>
+
+<div class="card">
+    <div class="flex justify-between items-center mb-4">
+        <h4 class="text-5xl">Gestion des abonnés</h4>
+        <p-button label="Ajouter un abonné" icon="pi pi-plus" class="mr-2" (click)="formVisible.set(true)"></p-button>
+    </div>
+</div>
+
+<p-table
+    [value]="abonneListFiltered.length > 0 || searchNumPolice ? abonneListFiltered : abonneList()"
+    [rows]="10"
+    [loading]="isWorking()"
+    [paginator]="true"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true"
+    dataKey="numPol"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} abonnés"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+>
+    <ng-template pTemplate="caption">
+        <div class="flex items-center justify-between">
+            <h5 class="m-0" class="text-3xl">Liste des abonnés</h5>
+            <p-iconfield>
+                <p-inputIcon icon="pi pi-search"></p-inputIcon>
+                <input pInputText type="text" placeholder="Numéro de police..." [(ngModel)]="searchNumPolice" name="searchNumPolice" (ngModelChange)="onSearchNumPoliceChange($event)" />
+            </p-iconfield>
+        </div>
+        <!-- Affiche la recherche seulement si searchNumPolice est défini -->
+        <div *ngIf="searchNumPolice?.length" class="mt-2">Recherche en cours pour : {{ searchNumPolice }}</div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr class="text-2xl">
+            <th style="min-width: 16rem">Police</th>
+            <th style="min-width: 16rem">Nom</th>
+            <th style="min-width: 16rem">Prénom</th>
+            <th style="min-width: 16rem">Date de naissance</th>
+            <th style="min-width: 16rem">Email</th>
+            <th style="min-width: 16rem">Genre</th>
+            <th style="min-width: 16rem">Date CNIB</th>
+            <th style="min-width: 16rem">Numéro Reccm</th>
+            <th style="min-width: 16rem">Numéro IFU</th>
+            <th style="min-width: 16rem">Numéro CNIB</th>
+            <th style="min-width: 16rem">Poste BP</th>
+            <th style="min-width: 16rem">Raison sociale</th>
+            <th style="min-width: 16rem">Tél. service</th>
+            <th style="min-width: 16rem">Tél. WhatsApp</th>
+            <th style="min-width: 16rem">Ville</th>
+            <th style="min-width: 16rem">Exploitation</th>
+            <th style="min-width: 16rem">Date création</th>
+            <th style="min-width: 12rem">Actions</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-abonne>
+        <tr>
+            <td class="p-2">{{ abonne.numPol }}</td>
+            <td class="p-2">{{ abonne.nom }}</td>
+            <td class="p-2">{{ abonne.prenom }}</td>
+            <td class="p-2">{{ abonne.dateNaissance | date: 'yyyy-MM-dd' }}</td>
+            <td class="p-2">{{ abonne.email }}</td>
+            <td class="p-2">{{ abonne.genre }}</td>
+            <td class="p-2">{{ abonne.dateCNIB | date: 'yyyy-MM-dd' }}</td>
+            <td class="p-2">{{ abonne.numReccm }}</td>
+            <td class="p-2">{{ abonne.numIfu }}</td>
+            <td class="p-2">{{ abonne.numCNIB }}</td>
+            <td class="p-2">{{ abonne.postbp }}</td>
+            <td class="p-2">{{ abonne.raisonSocial }}</td>
+            <td class="p-2">{{ abonne.telSer }}</td>
+            <td class="p-2">{{ abonne.telWhatsapp }}</td>
+            <td class="p-2">{{ abonne.ville }}</td>
+            <td class="p-2">{{ abonne.exploitation?.code }}</td>
+            <td class="p-2">{{ abonne.dateCreation | date: 'yyyy-MM-dd' }}</td>
+            <td class="p-2">
+                <div class="flex justify-end gap-2">
+                    <p-button icon="pi pi-pencil" severity="info" [rounded]="true" [outlined]="true" (click)="updateAbonne(abonne)"></p-button>
+                    <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (onClick)="deleteAbonne($event, abonne)"></p-button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Abonné" [modal]="true" [(visible)]="formVisible" [style]="{ width: '40rem' }">
+    <div class="font-bold mb-2">
+        {{ abonneForm.get('numPolice')?.value }}
+    </div>
+
+    <form (ngSubmit)="submitAbonneForm()" [formGroup]="abonneForm">
+        <p-tabs [(value)]="selectedTab">
+            <p-tablist>
+                <p-tab value="0">Personne physique</p-tab>
+                <p-tab value="1">Personne morale</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="font-semibold block mb-1">Nom</label>
+                            <input pInputText formControlName="nom" class="w-full" />
+                            <small *ngIf="abonneForm.get('nom')?.hasError('numbersNotAllowed')" class="text-red-500"> Le nom ne doit pas contenir de chiffres. </small>
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Prénom</label>
+                            <input pInputText formControlName="prenom" class="w-full" />
+                            <small *ngIf="abonneForm.get('prenom')?.hasError('numbersNotAllowed')" class="text-red-500"> Le prénom ne doit pas contenir de chiffres. </small>
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Numéro CNIB</label>
+                            <input pInputText formControlName="numCNIB" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Date de naissance</label>
+                            <input pInputText formControlName="dateNaissance" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Email</label>
+                            <input pInputText formControlName="email" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Genre</label>
+                            <input pInputText formControlName="genre" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Date CNIB</label>
+                            <input pInputText formControlName="dateCNIB" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Poste BP</label>
+                            <input pInputText formControlName="postbp" class="w-full" />
+                        </div>
+
+                        <div>
+                            <label class="font-semibold block mb-1">Tél. WhatsApp</label>
+                            <input pInputText formControlName="telWhatsapp" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Ville</label>
+                            <input pInputText formControlName="ville" class="w-full" />
+                        </div>
+                        <div class="col-span-2">
+                            <label class="font-semibold block mb-1">Exploitation</label>
+                            <p-dropdown formControlName="exploitation" [options]="exploitationList()" optionLabel="code" optionValue="code" placeholder="Sélectionner une exploitation" class="w-full"></p-dropdown>
+                        </div>
+                    </div>
+                </p-tabpanel>
+
+                <p-tabpanel value="1">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="font-semibold block mb-1">Raison sociale</label>
+                            <input pInputText formControlName="raisonSocial" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Numéro Reccm</label>
+                            <input pInputText formControlName="numReccm" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Numéro IFU</label>
+                            <input pInputText formControlName="numIfu" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Tél. service</label>
+                            <input pInputText formControlName="telSer" class="w-full" />
+                        </div>
+
+                        <div>
+                            <label class="font-semibold block mb-1">Tél. WhatsApp</label>
+                            <input pInputText formControlName="telWhatsapp" class="w-full" />
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Ville</label>
+                            <input pInputText formControlName="ville" class="w-full" />
+                        </div>
+                        <div class="col-span-2">
+                            <label class="font-semibold block mb-1">Exploitation</label>
+                            <p-dropdown formControlName="exploitation" [options]="exploitationList()" optionLabel="code" optionValue="code" placeholder="Sélectionner une exploitation" class="w-full"></p-dropdown>
+                        </div>
+                    </div>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+
+        <div class="flex justify-end gap-3 mt-6">
+            <p-button label="Annuler" severity="secondary" (click)="closeForm()" />
+            <p-button type="submit" label="Enregistrer" severity="info" [disabled]="!isCurrentTabValid()"></p-button>
+        </div>
+    </form>
+</p-dialog>
+<p-confirm-dialog></p-confirm-dialog>

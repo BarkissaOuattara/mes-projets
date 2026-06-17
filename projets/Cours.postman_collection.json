@@ -1,0 +1,270 @@
+{
+  "info": {
+    "_postman_id": "a9699754-ff57-45f3-be15-973826c3a728",
+    "name": "Cours",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43273974"
+  },
+  "item": [
+    {
+      "name": "Create",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var template = `",
+              "<canvas id=\"myChart\" height=\"75\"></canvas>",
+              "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"><\\/script>",
+              "<script>",
+              "  pm.getData(function(err, value) {",
+              "    var data = value.response;",
+              "    if (!data || data.length === 0) {",
+              "      document.getElementById('myChart').style.display = 'none';",
+              "      var msg = document.createElement('p');",
+              "      msg.innerText = 'No data available';",
+              "      msg.style.textAlign = 'center';",
+              "      msg.style.fontSize = '18px';",
+              "      document.body.appendChild(msg);",
+              "      return;",
+              "    }",
+              "    var ctx = document.getElementById('myChart');",
+              "    new Chart(ctx, {",
+              "      type: 'bar',",
+              "      data: {",
+              "        labels: data.map(function(c) { return c.titre; }),",
+              "        datasets: [{",
+              "          label: 'Volume Horaire (h)',",
+              "          data: data.map(function(c) { return c.volumeHoraire; }),",
+              "          backgroundColor: 'rgba(54, 162, 235, 0.6)',",
+              "          borderColor: 'rgba(54, 162, 235, 1)',",
+              "          borderWidth: 1",
+              "        }]",
+              "      },",
+              "      options: {",
+              "        title: { display: true, text: 'Cours - Volume Horaire' },",
+              "        scales: {",
+              "          xAxes: [{ scaleLabel: { display: true, labelString: 'Titre du Cours' } }],",
+              "          yAxes: [{ scaleLabel: { display: true, labelString: 'Volume Horaire (h)' }, ticks: { beginAtZero: true } }]",
+              "        }",
+              "      }",
+              "    });",
+              "  });",
+              "<\\/script>`;",
+              "",
+              "function constructVisualizerPayload() {",
+              "  return { response: pm.response.json() };",
+              "}",
+              "",
+              "pm.visualizer.set(template, constructVisualizerPayload());"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n        \"id\": 1,\r\n        \"titre\": \"Services Web\",\r\n        \"enseignant\": \"Dr. Somda\",\r\n        \"volumeHoraire\": 350,\r\n        \"actif\": true\r\n    }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cours",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "cours"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Patch",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"volumeHoraire\": 40,\r\n  \"actif\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cours/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "cours",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n{ \"op\": \"replace\", \"path\": \"/volumeHoraire\", \"value\": 40 },\r\n{ \"op\": \"replace\", \"path\": \"/actif\", \"value\": false }\r\n]"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cours",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "cours"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n        \"id\": 2,\r\n        \"titre\": \"Genie logiciel\",\r\n        \"enseignant\": \"Dr. Sabane\",\r\n        \"volumeHoraire\": 45,\r\n        \"actif\": true\r\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cours",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "cours"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n{ \"op\": \"replace\", \"path\": \"/volumeHoraire\", \"value\": 40 },\r\n{ \"op\": \"replace\", \"path\": \"/actif\", \"value\": false }\r\n]"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cours/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "cours",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "post",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "PUT",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"id\": 4,\r\n\"titre\": \"Services Web Avancés\",\r\n\"enseignant\": \"Dr. Somda\",\r\n\"volumeHoraire\": 36,\r\n\"actif\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/cours",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "cours"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "cree",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Pagination",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}

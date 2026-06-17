@@ -1,0 +1,3 @@
+//MO012-013.TXT ANA00012 TO ANA00013
+Commande		TAR	92	nouvelle taille enregistrement : 92
+Commande	DateCommande	CNW	Chaîne$Date (aaaammjj)	la rubrique DateCommande a pour nouveau type Chaîne

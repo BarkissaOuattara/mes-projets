@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: edulink-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Ges_cli
+    username: postgres
+    password: Barkissa
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+        hibernate:
+        "[format_sql]": true
+
+server:
+  port: 5000
